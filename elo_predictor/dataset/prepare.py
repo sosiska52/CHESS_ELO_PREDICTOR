@@ -52,10 +52,22 @@ def pad_sequence(seq, max_len):
 df["moves"] = df["moves"].apply(lambda x: pad_sequence(x, MAX_MOVES))
 
 X = np.vstack(df["moves"].values)
-y = df["white_rating"].values
 
-print("Форма X:", X.shape)
-print("Форма y:", y.shape)
+# Целевая переменная (рейтинги белых игроков)
+y = df["white_rating"].values.astype(float)
+
+# === Нормализация рейтингов ===
+y_mean = y.mean()
+y_std = y.std()
+y_norm = (y - y_mean) / y_std
+
+print(f"Среднее рейтингов: {y_mean:.2f}, стандартное отклонение: {y_std:.2f}")
+
+# === Сохранение статистики для денормализации ===
+with open("rating_norm.pkl", "wb") as f:
+    pickle.dump({"mean": y_mean, "std": y_std}, f)
+
+y = y_norm
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42)
