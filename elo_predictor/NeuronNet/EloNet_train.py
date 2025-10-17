@@ -70,7 +70,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-5)
 EPOCHS = 20
 train_losses = []
 
-print("🚀 Начало обучения...\n")
+print("Начало обучения...\n")
 
 for epoch in range(EPOCHS):
     model.train()
@@ -87,7 +87,7 @@ for epoch in range(EPOCHS):
     train_losses.append(avg_loss)
     print(f"Epoch {epoch + 1}/{EPOCHS} | Loss: {avg_loss:.4f}")
 
-print("\n✅ Обучение завершено!")
+print("\nОбучение завершено!")
 
 # ==============================
 # 🔹 5. Оценка модели
@@ -103,7 +103,7 @@ y_real = y_test * norm["std"] + norm["mean"]
 mae = mean_absolute_error(y_real, preds_real)
 rmse = math.sqrt(mean_squared_error(y_real, preds_real))
 
-print(f"\n📊 Результаты на тесте:")
+print(f"\nРезультаты на тесте:")
 print(f"MAE: {mae:.2f} ELO")
 print(f"RMSE: {rmse:.2f} ELO")
 
@@ -114,12 +114,8 @@ plt.figure(figsize=(7, 4))
 plt.plot(train_losses, label="Train Loss (MSE)")
 plt.xlabel("Epoch")
 plt.ylabel("Loss")
-plt.title("📉 График обучения модели")
+plt.title("График обучения модели")
 plt.legend()
 plt.show()
 
-# ==============================
-# 🔹 7. Сохранение модели
-# ==============================
 torch.save(model.state_dict(), "elo_lstm_model.pth")
-print("💾 Модель сохранена в elo_lstm_model.pth")
