@@ -79,21 +79,26 @@ for epoch in range(EPOCHS):
 
 print("\nОбучение завершено")
 
-
 model.eval()
 with torch.no_grad():
     preds = model(X_test_tensor).numpy()
 
-# Денормализация прогнозов и меток
 preds_real = preds * norm["std"] + norm["mean"]
 y_real = y_test * norm["std"] + norm["mean"]
 
 mae = mean_absolute_error(y_real, preds_real)
 rmse = math.sqrt(mean_squared_error(y_real, preds_real))
 
+diffs = np.abs(y_real - preds_real)
+mean_diff = np.mean(diffs)
+min_diff = np.min(diffs)
+max_diff = np.max(diffs)
+
 print(f"\nРезультаты на тесте:")
 print(f"MAE: {mae:.2f} ELO")
 print(f"RMSE: {rmse:.2f} ELO")
+print(f"Минимальное отклонение: {min_diff:.2f} ELO")
+print(f"Максимальное отклонение: {max_diff:.2f} ELO")
 
 plt.figure(figsize=(7, 4))
 plt.plot(train_losses, label="Train Loss (MSE)")

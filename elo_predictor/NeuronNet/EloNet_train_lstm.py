@@ -74,7 +74,7 @@ for epoch in range(EPOCHS):
     train_losses.append(avg_loss)
     print(f"Epoch {epoch + 1}/{EPOCHS} | Loss: {avg_loss:.4f}")
 
-print("\nОбучение завершено!")
+print("\nОбучение завершено")
 
 model.eval()
 with torch.no_grad():

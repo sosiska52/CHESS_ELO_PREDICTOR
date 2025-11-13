@@ -19,6 +19,7 @@ df = df.drop_duplicates()
 
 df = df[(df["white_rating"] >= 800) & (df["white_rating"] <= 2500)]
 df = df[(df["black_rating"] >= 800) & (df["black_rating"] <= 2500)]
+df = df[df["white_rating"] != 1500]
 
 df = df[df["moves"].apply(lambda x: len(x.split()) > 10)]
 
